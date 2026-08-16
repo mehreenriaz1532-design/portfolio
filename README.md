@@ -1,12 +1,13 @@
-# Mehreen Riaz 👋
+# Mehreen Riaz 
 ### Frontend Web Developer
 
-Main responsive aur modern websites banati hun HTML, CSS, JavaScript aur React ke sath.
-Mera focus clean UI aur smooth user experience par hai.
+I build responsive and modern websites using HTML, CSS, JavaScript, and React. 
+My focus is on clean UI and smooth user experience.
 
 ---
 
-### **🙋‍♀️ About Me**
-- 💻 Skills: HTML5, CSS3, JavaScript, React, Tailwind CSS, Git
-- 🎨 Passion: UI/UX Design + Frontend Development  
-- 📍 Location: Bahawalpur, Pakistan
+### 
+** About Me**
+**Skills**: HTML5, CSS3, JavaScript, React, Tailwind CSS, Git
+**Passion**: UI/UX Design + Frontend Development  
+**Location**: Bahawalpur, Pakistan
