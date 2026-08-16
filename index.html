@@ -3,180 +3,729 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mehreen Riaz — Frontend Web </title>
+<title>Mehreen Riaz — Web Developer &amp; Frontend Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0e1a16;
-    --paper:#eef2ea;
-    --paper-dim:#c9d2c2;
-    --spring:#8BC34A;
-    --summer:#FFB300;
-    --autumn:#C1560C;
-    --winter:#4FC3F7;
-    --accent: var(--spring);
-    --sky-a:#bfe3f0;
-    --sky-b:#eaf7d9;
+    --bg:#08070f;
+    --bg-elevated:#100e1c;
+    --bg-card:#15132444;
+    --violet:#8b6bff;
+    --violet-dim:#5b45a8;
+    --cyan:#3fe8dd;
+    --text:#f3f1ff;
+    --text-dim:#948fb3;
+    --border:#232036;
+    --maxw:1180px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--ink);
-    color:var(--paper);
-    font-family:'Inter', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope', sans-serif;
     overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,.display{
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    letter-spacing:-0.01em;
-  }
-  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--violet);color:#fff;}
+  a{color:inherit;text-decoration:none;}
 
-  /* ---------- HERO ---------- */
+  .noise{
+    position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom, rgba(8,7,15,.85), transparent);
+    transition:background .3s;
+  }
+  .logo{
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:18px;letter-spacing:.5px;
+  }
+  .logo span{color:var(--violet);}
+  .nav-links{display:flex;gap:36px;font-size:14px;color:var(--text-dim);font-weight:500;}
+  .nav-links a{position:relative;transition:color .25s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--cyan);transition:width .3s;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--violet-dim);padding:9px 18px;border-radius:100px;font-size:13px;font-weight:600;
+    transition:all .3s;
+  }
+  .nav-cta:hover{background:var(--violet);border-color:var(--violet);box-shadow:0 0 24px #8b6bff66;}
+  @media(max-width:760px){.nav-links{display:none;}}
+
+  /* ---------- hero ---------- */
   .hero{
-    position:relative;
-    height:100svh;
-    min-height:640px;
-    width:100%;
-    overflow:hidden;
-    background:linear-gradient(180deg, var(--sky-a), var(--sky-b));
-    transition:background 2.2s ease;
+    position:relative;height:100vh;min-height:680px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;overflow:hidden;
   }
-  #scene-canvas{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-    display:block;
+  #fox-canvas{position:absolute;inset:0;z-index:0;}
+  .hero-glow{
+    position:absolute;width:70vw;height:70vw;max-width:900px;max-height:900px;
+    background:radial-gradient(circle, #4d2fa322 0%, transparent 65%);
+    top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
   }
-  .hero-nav{
-    position:absolute; top:0; left:0; right:0;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:26px 6vw;
-    z-index:5;
-    font-size:13px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--ink);
-    mix-blend-mode:normal;
+  .hero-content{position:relative;z-index:2;padding:0 20px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:var(--cyan);
+    text-transform:uppercase;margin-bottom:22px;opacity:0;
   }
-  .hero-nav .mark{
-    font-family:'Fraunces', serif;
-    font-size:18px;
-    font-weight:600;
-    letter-spacing:0;
-    text-transform:none;
+  .eyebrow::before{content:'— ';color:var(--violet);}
+  h1.name{
+    font-family:'Unbounded',sans-serif;font-weight:900;
+    font-size:clamp(52px,10vw,120px);line-height:0.95;letter-spacing:-2px;
+    opacity:0;
   }
-  .hero-nav .links{display:flex; gap:22px;}
-  .hero-nav .links a{opacity:0.75; transition:opacity .2s;}
-  .hero-nav .links a:hover{opacity:1;}
-
-  .hero-copy{
-    position:absolute;
-    left:6vw; bottom:14vh;
-    z-index:5;
-    max-width:560px;
-    color:var(--ink);
+  h1.name .outline{
+    -webkit-text-stroke:1.5px var(--text);color:transparent;
   }
-  .hero-eyebrow{
-    font-size:12px;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    opacity:0.7;
-    margin-bottom:14px;
-    display:flex; align-items:center; gap:10px;
+  .role{
+    font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(16px,2.4vw,26px);
+    color:var(--text-dim);margin-top:18px;opacity:0;
   }
-  .hero-eyebrow::before{
-    content:"";
-    width:26px; height:1px;
-    background:currentColor;
-    display:inline-block;
+  .role em{font-style:normal;color:var(--cyan);}
+  .hero-desc{
+    max-width:520px;margin:24px auto 0;color:var(--text-dim);font-size:15px;line-height:1.7;opacity:0;
   }
-  .hero-copy h1{
-    font-size:clamp(2.4rem, 6vw, 4.4rem);
-    line-height:1.02;
+  .hero-btns{margin-top:38px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;}
+  .btn{
+    padding:14px 30px;border-radius:100px;font-weight:700;font-size:14px;
+    display:inline-flex;align-items:center;gap:8px;transition:all .35s cubic-bezier(.2,.8,.2,1);
   }
-  .hero-copy .season-word{
-    font-style:italic;
-    transition:color .8s ease;
-  }
-  .hero-copy p{
-    margin-top:18px;
-    font-size:16px;
-    max-width:420px;
-    opacity:0.82;
-    line-height:1.55;
-  }
-
-  .season-switch{
-    position:absolute;
-    right:6vw; bottom:14vh;
-    z-index:6;
-    display:flex; flex-direction:column; gap:10px;
-  }
-  .season-btn{
-    width:52px; height:52px;
-    border-radius:50%;
-    border:1px solid rgba(14,26,22,0.25);
-    background:rgba(255,255,255,0.35);
-    backdrop-filter:blur(6px);
-    display:flex; align-items:center; justify-content:center;
-    font-size:20px;
-    cursor:pointer;
-    transition:transform .25s ease, background .25s ease, border-color .25s ease;
-    color:var(--ink);
-  }
-  .season-btn:hover{transform:scale(1.08);}
-  .season-btn.active{
-    background:var(--accent);
-    border-color:var(--accent);
-    transform:scale(1.1);
-  }
-
+  .btn-solid{background:var(--violet);color:#fff;box-shadow:0 8px 30px -8px #8b6bff88;}
+  .btn-solid:hover{transform:translateY(-3px);box-shadow:0 14px 34px -6px #8b6bffaa;}
+  .btn-ghost{border:1px solid var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-3px);}
   .scroll-cue{
-    position:absolute; left:6vw; bottom:36px; z-index:5;
-    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--ink); opacity:0.6;
-    display:flex; align-items:center; gap:8px;
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);
+    display:flex;flex-direction:column;align-items:center;gap:10px;letter-spacing:2px;opacity:0;
   }
-  .scroll-cue .line{width:1px; height:26px; background:currentColor; animation:pulse-line 2s infinite;}
-  @keyframes pulse-line{0%,100%{opacity:.3;}50%{opacity:1;}}
+  .scroll-cue .line{width:1px;height:36px;background:linear-gradient(var(--violet), transparent);animation:pulseLine 2s ease-in-out infinite;}
+  @keyframes pulseLine{0%,100%{opacity:.3;}50%{opacity:1;}}
 
-  /* ---------- SECTIONS ---------- */
-  section{
-    padding:100px 6vw;
-    max-width:1180px;
-    margin:0 auto;
+  /* ---------- moon divider (original illustration) ---------- */
+  .moon-divider{
+    position:relative;height:78vh;min-height:520px;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:linear-gradient(180deg,#08070f 0%, #0c0a19 40%, #08070f 100%);
   }
-  .kicker{
-    font-size:12px;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:var(--accent);
-    transition:color .8s ease;
-    margin-bottom:16px;
-    display:flex; align-items:center; gap:10px;
+  .moon-scene{position:relative;width:100%;height:100%;}
+  .moon{
+    position:absolute;top:12%;left:50%;transform:translateX(-50%);
+    width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle at 35% 32%, #fdfbff 0%, #e6e0ff 35%, #b7a9e8 70%, #7a6bb0 100%);
+    box-shadow:0 0 90px 20px #8b6bff33, 0 0 200px 60px #3fe8dd11;
+    will-change:transform;
   }
-  .kicker::before{content:""; width:26px; height:1px; background:currentColor;}
-  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease;}
-  .reveal.in{opacity:1; transform:translateY(0);}
+  .moon::before{
+    content:'';position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle at 65% 30%, transparent 40%, #4d3f7a22 41%, transparent 42%),
+               radial-gradient(circle at 30% 60%, transparent 30%, #4d3f7a1a 31%, transparent 32%);
+  }
+  .silhouette{
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    width:min(340px,60vw);
+    filter:drop-shadow(0 0 40px #8b6bff55);
+    will-change:transform;
+  }
+  .petal{
+    position:absolute;width:10px;height:14px;background:linear-gradient(135deg,#ffd9ec,#c9b6ff);
+    border-radius:80% 5% 80% 5%;opacity:.75;
+  }
+  .butterfly{
+    position:absolute;width:16px;height:12px;opacity:0;
+  }
+  .butterfly svg{width:100%;height:100%;filter:drop-shadow(0 0 6px #3fe8ddaa);}
+  .moon-caption{
+    position:absolute;bottom:9%;left:50%;transform:translateX(-50%);text-align:center;z-index:3;opacity:0;
+  }
+  .moon-caption p{
+    font-family:'Unbounded',sans-serif;font-size:clamp(18px,3vw,30px);font-weight:600;color:var(--text);
+    letter-spacing:.5px;
+  }
+  .moon-caption span{color:var(--cyan);}
+  .moon-caption small{
+    display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;
+  }
 
-  /* About */
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.1fr 1fr;
-    gap:60px;
-    align-items:start;
+  /* ---------- shared section styling ---------- */
+  section{position:relative;padding:120px clamp(20px,5vw,64px);}
+  .wrap{max-width:var(--maxw);margin:0 auto;}
+  .section-head{margin-bottom:64px;}
+  .tag{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:var(--cyan);
+    text-transform:uppercase;display:inline-block;margin-bottom:16px;
   }
-  .about-grid h2{font-size:clamp(1.8rem,3.4vw,2.6rem); line-height:1.15; margin-bottom:22px;}
-  .about-grid p{color:var(--paper-dim); line-height:1.7; font-size:15.5px;}
-  .stat-row{
-    display:flex; gap:36px; margin-top:36px; flex-wrap:wrap;
+  .tag::before{content:'';display:inline-block;width:22px;height:1px;background:var(--cyan);margin-right:10px;vertical-align:middle;}
+  h2{
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(30px,5vw,52px);
+    letter-spacing:-1px;line-height:1.08;
   }
-  .stat-row .stat b{
-    display:block; font-family:'Fraunces', serif; font-size:2rem; color:var(--paper);
-  }
-  .stat-row .stat span{font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--paper-dim);}
+  h2 i{font-style:normal;color:transparent;-webkit-text-stroke:1.2px var(--violet);}
+  .reveal{opacity:0;transform:translateY(60px);transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-l{opacity:0;transform:translateX(-60px);transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);}
+  .reveal-l.in{opacity:1;transform:translateX(0);}
+  .reveal-r{opacity:0;transform:translateX(60px);transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);}
+  .reveal-r.in{opacity:1;transform:translateX(0);}
 
-  .edu-card{
-    border:1px solid rgba(23
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-card{
+    background:linear-gradient(160deg,#15132a,#0e0c19);
+    border:1px solid var(--border);border-radius:22px;padding:38px 34px;
+    transition:transform .4s, border-color .4s, box-shadow .4s;
+  }
+  .about-card:hover{transform:translateY(-6px);border-color:var(--violet-dim);box-shadow:0 24px 50px -20px #4d2fa355;}
+  .about-card .num{font-family:'JetBrains Mono',monospace;color:var(--violet);font-size:13px;letter-spacing:2px;}
+  .about-card h3{font-family:'Unbounded',sans-serif;font-size:22px;margin:16px 0 14px;}
+  .about-card p{color:var(--text-dim);font-size:14.5px;line-height:1.75;}
+  .about-card .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:100px;
+    border:1px solid var(--border);color:var(--text-dim);
+  }
+
+  /* ---------- skills marquee ---------- */
+  .skills-strip{
+    padding:52px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    overflow:hidden;position:relative;
+  }
+  .marquee{display:flex;width:max-content;animation:scroll 26s linear infinite;}
+  .marquee span{
+    font-family:'Unbounded',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:800;
+    color:transparent;-webkit-text-stroke:1px var(--border);padding:0 34px;white-space:nowrap;
+  }
+  .marquee span.hl{-webkit-text-stroke:1px var(--cyan);color:transparent;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- timeline ---------- */
+  .timeline{position:relative;padding-left:40px;}
+  .timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--violet), var(--cyan) 50%, transparent);}
+  .t-item{position:relative;padding-bottom:56px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-dot{
+    position:absolute;left:-40px;top:4px;width:14px;height:14px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--violet);box-shadow:0 0 0 4px #08070f, 0 0 20px #8b6bff88;
+  }
+  .t-item.in .t-dot{background:var(--cyan);border-color:var(--cyan);}
+  .t-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:1px;margin-bottom:8px;}
+  .t-meta b{color:var(--cyan);font-weight:500;}
+  .t-item h3{font-family:'Unbounded',sans-serif;font-size:21px;margin-bottom:4px;}
+  .t-item .company{color:var(--violet);font-size:13.5px;font-weight:700;margin-bottom:10px;}
+  .t-item p{color:var(--text-dim);font-size:14.5px;line-height:1.75;max-width:560px;}
+
+  /* ---------- projects ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  @media(max-width:760px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{
+    border:1px solid var(--border);border-radius:20px;padding:30px;position:relative;overflow:hidden;
+    background:#0e0c19;transition:border-color .35s, transform .35s;
+  }
+  .proj-card:hover{border-color:var(--cyan);transform:translateY(-5px);}
+  .proj-card::before{
+    content:'';position:absolute;top:-40%;right:-30%;width:60%;height:60%;
+    background:radial-gradient(circle, #8b6bff22, transparent 70%);pointer-events:none;
+  }
+  .proj-star{color:var(--cyan);font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:14px;display:block;}
+  .proj-card h3{font-family:'Unbounded',sans-serif;font-size:19px;margin-bottom:12px;}
+  .proj-card p{color:var(--text-dim);font-size:14px;line-height:1.7;margin-bottom:18px;}
+  .proj-foot{display:flex;justify-content:space-between;align-items:center;}
+  .proj-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);}
+  .proj-stack{display:flex;gap:6px;}
+  .dotchip{width:8px;height:8px;border-radius:50%;background:var(--violet-dim);}
+  .proj-links{display:flex;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+  .proj-links a{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:.5px;transition:opacity .3s;}
+  .proj-links a:hover{opacity:.7;}
+
+  /* ---------- education ---------- */
+  .edu-box{
+    display:flex;gap:34px;align-items:flex-start;background:linear-gradient(160deg,#15132a,#0e0c19);
+    border:1px solid var(--border);border-radius:24px;padding:44px;
+  }
+  @media(max-width:640px){.edu-box{flex-direction:column;}}
+  .edu-badge{
+    width:76px;height:76px;border-radius:50%;flex:0 0 auto;
+    background:radial-gradient(circle,#1c1830,#0e0c19);border:1px solid var(--violet-dim);
+    display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;
+    font-weight:800;color:var(--cyan);font-size:22px;
+  }
+  .edu-box h3{font-family:'Unbounded',sans-serif;font-size:22px;margin-bottom:4px;}
+  .edu-box .deg{color:var(--violet);font-weight:700;font-size:14px;margin-bottom:2px;}
+  .edu-box .yrs{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:18px;}
+  .edu-box ul{list-style:none;}
+  .edu-box li{color:var(--text-dim);font-size:14.5px;line-height:1.75;margin-bottom:10px;padding-left:20px;position:relative;}
+  .edu-box li::before{content:'▹';position:absolute;left:0;color:var(--cyan);}
+
+  /* ---------- contact ---------- */
+  .contact-wrap{text-align:center;max-width:640px;margin:0 auto;}
+  .contact-wrap p{color:var(--text-dim);font-size:16px;line-height:1.8;margin:22px 0 40px;}
+  .socials{display:flex;justify-content:center;gap:16px;margin-bottom:40px;}
+  .soc{
+    width:48px;height:48px;border-radius:50%;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;transition:all .35s;
+  }
+  .soc:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 10px 24px -8px #3fe8dd66;}
+  .soc svg{width:18px;height:18px;}
+
+  footer{
+    padding:34px clamp(20px,5vw,64px);border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;}
+    .reveal,.reveal-l,.reveal-r{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<nav>
+  <div class="logo">mehreen<span>.dev</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="https://www.linkedin.com/in/mehreen-riaz-1a6343393/" target="_blank" rel="noopener" class="nav-cta">Get In Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="fox-canvas"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="eyebrow" id="e1">Web Developer · Frontend Developer</div>
+    <h1 class="name" id="e2">MEHREEN<span class="outline">.</span></h1>
+    <div class="role" id="e3">Web &amp; <em>Frontend</em> Developer</div>
+    <p class="hero-desc" id="e4">I build clean, responsive websites with HTML, CSS, JavaScript and Bootstrap — turning ideas into real, working sites that people actually use.</p>
+    <div class="hero-btns" id="e5">
+      <a href="#projects" class="btn btn-solid">View My Work</a>
+      <a href="https://www.linkedin.com/in/mehreen-riaz-1a6343393/" target="_blank" rel="noopener" class="btn btn-ghost">Get In Touch</a>
+    </div>
+  </div>
+  <div class="scroll-cue" id="e6"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- MOON / ORIGINAL ILLUSTRATION DIVIDER -->
+<section class="moon-divider">
+  <div class="moon-scene">
+    <div class="moon" id="moon"></div>
+    <svg class="silhouette" id="silhouette" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="dressGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#efe7ff"/>
+          <stop offset="100%" stop-color="#8b6bff" stop-opacity="0.55"/>
+        </linearGradient>
+      </defs>
+      <!-- flowing dress -->
+      <path d="M100 60 C 85 90, 40 120, 20 230 C 60 250, 140 250, 180 230 C 160 120, 115 90, 100 60 Z" fill="url(#dressGrad)" opacity="0.9"/>
+      <!-- torso -->
+      <path d="M92 40 C 90 55, 90 60, 100 68 C 110 60, 110 55, 108 40 C 106 30, 94 30, 92 40 Z" fill="#f3f1ff"/>
+      <!-- head -->
+      <circle cx="100" cy="24" r="15" fill="#f3f1ff"/>
+      <!-- flowing hair -->
+      <path d="M86 20 C 60 30, 55 70, 70 100 C 75 75, 80 55, 88 35 Z" fill="#d9ccff" opacity="0.85"/>
+      <path d="M114 20 C 140 30, 145 70, 130 100 C 125 75, 120 55, 112 35 Z" fill="#d9ccff" opacity="0.85"/>
+    </svg>
+    <div id="petals"></div>
+    <div id="butterflies"></div>
+    <div class="moon-caption" id="moonCap">
+      <p>Every pixel, every motion, <span>every line of code</span></p>
+      <small>has a purpose</small>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="tag">What I Do</div>
+      <h2>Two skills, <i>one focus:</i><br>sites that work well.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card reveal-l">
+        <div class="num">01 / WEB</div>
+        <h3>Web Developer</h3>
+        <p>Building complete websites from scratch — structure, styling and interactivity — using HTML5, CSS3, JavaScript and Bootstrap. From news sites to restaurant pages, I plan the layout, write the code and ship a working site.</p>
+        <div class="stack">
+          <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span><span class="chip">Bootstrap 5</span>
+        </div>
+      </div>
+      <div class="about-card reveal-r">
+        <div class="num">02 / FRONTEND</div>
+        <h3>Frontend Developer</h3>
+        <p>Focused on the part people actually see and use — responsive layouts, clean UI, smooth interactions and pages that look right on every screen size, from mobile to desktop.</p>
+        <div class="stack">
+          <span class="chip">Responsive Design</span><span class="chip">UI Layout</span><span class="chip">Cross-browser</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS MARQUEE -->
+<div class="skills-strip" id="skills">
+  <div class="marquee" id="marquee">
+    <span>HTML5</span><span class="hl">CSS3</span><span>JavaScript</span><span>Bootstrap 5</span><span class="hl">Responsive Design</span><span>Git &amp; GitHub</span>
+    <span>HTML5</span><span class="hl">CSS3</span><span>JavaScript</span><span>Bootstrap 5</span><span class="hl">Responsive Design</span><span>Git &amp; GitHub</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="tag">Selected Work</div>
+      <h2>Projects worth <i>a closer look.</i></h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <span class="proj-star">★ FEATURED</span>
+        <h3>TechFlux</h3>
+        <p>A tech news website — TECHFLUX — with a home feed, news and detail pages built with HTML, CSS and JavaScript.</p>
+        <div class="proj-foot"><span class="proj-date">Live on Vercel</span><div class="proj-stack"><div class="dotchip"></div><div class="dotchip"></div><div class="dotchip"></div></div></div>
+        <div class="proj-links">
+          <a href="https://github.com/mehreenriaz1532-design/techflux" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://techflux-five.vercel.app" target="_blank" rel="noopener">Live site ↗</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-star">★ FEATURED</span>
+        <h3>TechWire</h3>
+        <p>A multi-page tech news website covering technology, gadgets, apps, games, software and podcasts — built with HTML, CSS and JavaScript.</p>
+        <div class="proj-foot"><span class="proj-date">HTML · CSS · JS</span><div class="proj-stack"><div class="dotchip"></div><div class="dotchip"></div><div class="dotchip"></div></div></div>
+        <div class="proj-links">
+          <a href="https://github.com/mehreenriaz1532-design/techwire-website" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-star">★ FEATURED</span>
+        <h3>Mehreen's Kitchen</h3>
+        <p>A professional restaurant homepage built with HTML, CSS and Bootstrap 5 — menu sections, hero banner and a clean, appetizing layout.</p>
+        <div class="proj-foot"><span class="proj-date">Live on GitHub Pages</span><div class="proj-stack"><div class="dotchip"></div><div class="dotchip"></div><div class="dotchip"></div></div></div>
+        <div class="proj-links">
+          <a href="https://github.com/mehreenriaz1532-design/mehreen-kitchen" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://mehreenriaz1532-design.github.io/mehreen-kitchen/" target="_blank" rel="noopener">Live site ↗</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-star">★ FEATURED</span>
+        <h3>Friendship License</h3>
+        <p>A playful "license of your friendship" page — a fun, custom-styled certificate site to make a friend feel special.</p>
+        <div class="proj-foot"><span class="proj-date">Live on Vercel</span><div class="proj-stack"><div class="dotchip"></div><div class="dotchip"></div><div class="dotchip"></div></div></div>
+        <div class="proj-links">
+          <a href="https://github.com/mehreenriaz1532-design/Friendship-License" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://friendship-license-mauve.vercel.app" target="_blank" rel="noopener">Live site ↗</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-star">★ FEATURED</span>
+        <h3>Birthday Wishes Template</h3>
+        <p>A responsive, fully customizable birthday-wishing website template built with HTML, CSS and JavaScript — made to surprise someone special.</p>
+        <div class="proj-foot"><span class="proj-date">HTML · CSS · JS</span><div class="proj-stack"><div class="dotchip"></div><div class="dotchip"></div><div class="dotchip"></div></div></div>
+        <div class="proj-links">
+          <a href="https://github.com/mehreenriaz1532-design/birthday-wishes-template" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-star">★ FEATURED</span>
+        <h3>Mehreen Dev — Login UI</h3>
+        <p>A responsive login page built with Bootstrap 5 — clean HTML/CSS structure and a mobile-friendly design.</p>
+        <div class="proj-foot"><span class="proj-date">Live on GitHub Pages</span><div class="proj-stack"><div class="dotchip"></div><div class="dotchip"></div><div class="dotchip"></div></div></div>
+        <div class="proj-links">
+          <a href="https://github.com/mehreenriaz1532-design/mehreen-web-dev" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://mehreenriaz1532-design.github.io/mehreen-web-dev/" target="_blank" rel="noopener">Live site ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact-wrap reveal">
+    <div class="tag">Contact</div>
+    <h2>Let's build something<br><i>worth remembering.</i></h2>
+    <p>I'm available across various platforms and typically respond within 24 hours. Feel free to connect for opportunities related to web development and frontend development.</p>
+    
+    <div class="socials">
+      <!-- GitHub -->
+      <a class="soc" href="https://github.com/mehreenriaz1532-design" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.53 9.53 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z" fill="currentColor"/>
+        </svg>
+      </a>
+      
+      <!-- LinkedIn -->
+      <a class="soc" href="https://www.linkedin.com/in/mehreen-riaz-1a6343393/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 4h16v16H4z" stroke="none"/>
+          <path d="M6.94 8.5a1.94 1.94 0 100-3.88 1.94 1.94 0 000 3.88zM5.25 10.5h3.38V19H5.25v-8.5zM11 10.5h3.24v1.16h.05c.45-.85 1.55-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V19h-3.38v-4.55c0-1.08-.02-2.48-1.51-2.48-1.51 0-1.74 1.18-1.74 2.4V19H11v-8.5z" fill="currentColor"/>
+        </svg>
+      </a>
+      
+      <!-- Email -->
+      <a class="soc" href="mailto:mehreenriaz1532@gmail.com" target="_blank" rel="noopener" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 5h18v14H3V5zm2 2v.01L12 12l7-4.99V7l-7 5-7-5z" fill="currentColor"/>
+        </svg>
+      </a>
+      
+      <!-- Instagram -->
+      <a class="soc" href="https://www.instagram.com/mehreenriaz1532/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.55.55.89 1.11 1.15 1.77.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 01-1.15 1.77 4.9 4.9 0 01-1.77 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 01-1.77-1.15 4.9 4.9 0 01-1.15-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77A4.9 4.9 0 015.45.53c.64-.25 1.37-.42 2.43-.47C8.94.01 9.28 0 12 0zm0 5a5 5 0 100 10 5 5 0 000-10zm0 8.2a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zm5.2-8.4a1.17 1.17 0 100-2.33 1.17 1.17 0 000 2.33z" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+    
+    <a href="https://github.com/mehreenriaz1532-design" target="_blank" rel="noopener" class="btn btn-solid">View GitHub Profile</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Mehreen Riaz. Built with HTML, Three.js &amp; a little bit of stardust.</span>
+  <span>Web Developer · Frontend Developer</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+<script>
+/* ================= THREE.JS PARTICLE FOX ================= */
+(function(){
+  const canvas = document.getElementById('fox-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.set(0,0,26);
+
+  function resize(){
+    const w = window.innerWidth, h = window.innerHeight;
+    renderer.setSize(w,h);
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* --- build a fox silhouette by sampling a canvas drawing --- */
+  function foxSilhouettePoints(count){
+    const c = document.createElement('canvas');
+    c.width = 400; c.height = 400;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.save();
+    ctx.translate(200,220);
+    // head
+    ctx.beginPath();
+    ctx.moveTo(0,-90);
+    ctx.bezierCurveTo(-70,-90,-95,-30,-90,20);
+    ctx.bezierCurveTo(-85,70,-50,95,0,95);
+    ctx.bezierCurveTo(50,95,85,70,90,20);
+    ctx.bezierCurveTo(95,-30,70,-90,0,-90);
+    ctx.closePath();
+    ctx.fill();
+    // ears
+    ctx.beginPath();
+    ctx.moveTo(-55,-70); ctx.lineTo(-95,-150); ctx.lineTo(-20,-95); ctx.closePath(); ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(55,-70); ctx.lineTo(95,-150); ctx.lineTo(20,-95); ctx.closePath(); ctx.fill();
+    // snout
+    ctx.beginPath();
+    ctx.moveTo(-25,40); ctx.lineTo(25,40); ctx.lineTo(0,100); ctx.closePath(); ctx.fill();
+    ctx.restore();
+
+    const data = ctx.getImageData(0,0,400,400).data;
+    const pts = [];
+    let tries = 0;
+    while(pts.length < count && tries < count*30){
+      tries++;
+      const x = Math.random()*400, y = Math.random()*400;
+      const idx = (Math.floor(y)*400+Math.floor(x))*4+3;
+      if(data[idx] > 100){
+        pts.push([(x-200)/9, -(y-200)/9, (Math.random()-0.5)*5]);
+      }
+    }
+    return pts;
+  }
+
+  const N = 3200;
+  const pts = foxSilhouettePoints(N);
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(pts.length*3);
+  const targets = new Float32Array(pts.length*3);
+  const colors = new Float32Array(pts.length*3);
+  const violet = new THREE.Color('#8b6bff');
+  const cyan = new THREE.Color('#3fe8dd');
+  const white = new THREE.Color('#f3f1ff');
+
+  for(let i=0;i<pts.length;i++){
+    // scattered start position (assembles inward)
+    positions[i*3]   = (Math.random()-0.5)*70;
+    positions[i*3+1] = (Math.random()-0.5)*70;
+    positions[i*3+2] = (Math.random()-0.5)*70;
+    targets[i*3]   = pts[i][0];
+    targets[i*3+1] = pts[i][1];
+    targets[i*3+2] = pts[i][2];
+    const t = Math.random();
+    const col = t < 0.55 ? white.clone().lerp(violet, Math.random()*0.6) : violet.clone().lerp(cyan, Math.random());
+    colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+
+  const mat = new THREE.PointsMaterial({
+    size:0.16, vertexColors:true, transparent:true, opacity:0.95,
+    depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+
+  /* --- ambient starfield --- */
+  const starCount = 600;
+  const starGeo = new THREE.BufferGeometry();
+  const starPos = new Float32Array(starCount*3);
+  for(let i=0;i<starCount;i++){
+    starPos[i*3] = (Math.random()-0.5)*140;
+    starPos[i*3+1] = (Math.random()-0.5)*140;
+    starPos[i*3+2] = (Math.random()-0.5)*80 - 20;
+  }
+  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos,3));
+  const starMat = new THREE.PointsMaterial({size:0.09, color:0x9088b0, transparent:true, opacity:0.6});
+  const stars = new THREE.Points(starGeo, starMat);
+  scene.add(stars);
+
+  let mouseX=0, mouseY=0;
+  window.addEventListener('mousemove', e=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5);
+    mouseY = (e.clientY/window.innerHeight - 0.5);
+  });
+
+  const clock = new THREE.Clock();
+  const assembleStart = performance.now();
+  function animate(){
+    requestAnimationFrame(animate);
+    const el = clock.getElapsedTime();
+    const assembleT = Math.min(1, (performance.now()-assembleStart)/2600);
+    const ease = 1 - Math.pow(1-assembleT, 3);
+
+    const posAttr = geo.attributes.position;
+    for(let i=0;i<pts.length;i++){
+      const ix=i*3;
+      const sx = (Math.random()-0.5)*70, sy=(Math.random()-0.5)*70, sz=(Math.random()-0.5)*70; // not used, kept static via lerp below
+    }
+    // lerp positions toward targets once (cheap approach: set directly using ease, avoids per-frame randomness after assembly)
+    if(assembleT < 1){
+      for(let i=0;i<pts.length;i++){
+        const ix=i*3;
+        posAttr.array[ix]   += (targets[ix]-posAttr.array[ix])*0.045;
+        posAttr.array[ix+1] += (targets[ix+1]-posAttr.array[ix+1])*0.045;
+        posAttr.array[ix+2] += (targets[ix+2]-posAttr.array[ix+2])*0.045;
+      }
+      posAttr.needsUpdate = true;
+    } else {
+      points.rotation.y = Math.sin(el*0.15)*0.25 + mouseX*0.4;
+      points.rotation.x = mouseY*0.15;
+    }
+    points.position.y = Math.sin(el*0.5)*0.4;
+    stars.rotation.y = el*0.01;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+
+<script>
+/* ================= SCROLL REVEAL (top -> bottom movement) ================= */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // hero intro sequence
+  const seq = ['e1','e2','e3','e4','e5','e6'];
+  seq.forEach((id,i)=>{
+    const el = document.getElementById(id);
+    el.style.transition = 'opacity .9s ease, transform .9s ease';
+    el.style.transform = 'translateY(24px)';
+    setTimeout(()=>{ el.style.opacity=1; el.style.transform='translateY(0)'; }, 300 + i*180);
+  });
+
+  // generic reveal-on-scroll
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+      }
+    });
+  }, {threshold:0.18});
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .t-item').forEach(el=>obs.observe(el));
+
+  // parallax: moon + silhouette + hero glow move as page scrolls top->bottom
+  const moon = document.getElementById('moon');
+  const sil = document.getElementById('silhouette');
+  const cap = document.getElementById('moonCap');
+  const glow = document.querySelector('.hero-glow');
+
+  function onScroll(){
+    const y = window.scrollY;
+    moon.style.transform = `translate(-50%, ${y*0.06}px) scale(${1+Math.min(y*0.0002,0.15)})`;
+    sil.style.transform = `translateX(-50%) translateY(${-y*0.03}px)`;
+    if(glow) glow.style.transform = `translate(-50%, ${-50 + y*0.04}%) `.replace('-50%,', '-50%,');
+    const moonSection = document.querySelector('.moon-divider');
+    const rect = moonSection.getBoundingClientRect();
+    const progress = 1 - Math.min(1, Math.max(0, rect.top / window.innerHeight));
+    cap.style.opacity = Math.min(1, progress*1.6);
+    cap.style.transform = `translate(-50%, ${(1-progress)*20}px)`;
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // floating petals
+  const petalHolder = document.getElementById('petals');
+  for(let i=0;i<14;i++){
+    const p = document.createElement('div');
+    p.className='petal';
+    p.style.left = (10+Math.random()*80)+'%';
+    p.style.top = (Math.random()*70)+'%';
+    p.style.animation = `floaty ${6+Math.random()*6}s ease-in-out ${Math.random()*4}s infinite`;
+    petalHolder.appendChild(p);
+  }
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-22px) rotate(180deg);}}
+  @keyframes flutter{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-14px) scale(1.1);}}`;
+  document.head.appendChild(styleTag);
+
+  // butterflies (original small svg shapes, not the reference image)
+  const bHolder = document.getElementById('butterflies');
+  const wingColor = ['#3fe8dd','#8b6bff'];
+  for(let i=0;i<8;i++){
+    const b = document.createElement('div');
+    b.className='butterfly';
+    b.style.left = (15+Math.random()*70)+'%';
+    b.style.top = (10+Math.random()*70)+'%';
+    b.style.animation = `flutter ${3+Math.random()*3}s ease-in-out ${Math.random()*3}s infinite`;
+    const c = wingColor[i%2];
+    b.innerHTML = `<svg viewBox="0 0 16 12"><path d="M8 6 C6 0,0 0,1 4 C2 8,6 8,8 6 C10 8,14 8,15 4 C16 0,10 0,8 6Z" fill="${c}"/></svg>`;
+    bHolder.appendChild(b);
+    setTimeout(()=>{ b.style.opacity = 0.85; }, 600+i*150);
+  }
+});
+</script>
+
+</body>
+</html>
