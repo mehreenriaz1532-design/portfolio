@@ -8,6 +8,9 @@ My focus is on clean UI and smooth user experience.
 
 ### 
 ** About Me**
+
 **Skills**: HTML5, CSS3, JavaScript, React, Tailwind CSS, Git
+
 **Passion**: UI/UX Design + Frontend Development  
+
 **Location**: Bahawalpur, Pakistan
